@@ -80,10 +80,10 @@ if(err){
 		var bodyObj ={
             name : dataFromPostman.name || dataFromDB.name,
              email : dataFromPostman.email || dataFromDB.email,
-              mobile : dataFromPostman.mobile || dataFromDB.mobile,
+              mobile : dataFromPostman.mobile || dataFromDB.mobile
 
 		}
-		Customer.editCustomer(userId,customerObj,function(err,data){
+		Customer.editCustomer(userId,bodyObj,function(err,data){
 
 if(err){
 			throw err;
