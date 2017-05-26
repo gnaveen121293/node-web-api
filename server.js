@@ -14,7 +14,7 @@ router.get("/",function(request,response){
 
 	response.send({name : "JohnGalt"})
 }) 
-router.get("/customers" ,function(request,response){
+router.get("/customer1" ,function(request,response){
 	Customer.getCustomers(function(err,customerData){
 		if(err){
 			throw err;
@@ -23,7 +23,7 @@ router.get("/customers" ,function(request,response){
 	})
 
 })
-router.post("/customer" , function(request,response){
+router.post("/customer2" , function(request,response){
 	var customerObj = request.body;
 	Customer.createCustomer(customerObj,function(err,data)
 	{
@@ -33,6 +33,67 @@ router.post("/customer" , function(request,response){
     response.json(data)
 	})
 })
+
+//  router.put("/customer3/:id",function(request,response){
+//  	var userId=request.params.id;
+//  	var customerObj=request.body;
+//  	Customer.editCustomer(userId,customerObj,function(err,data){
+
+// if(err){
+// 			throw err;
+// 		}
+// 		response.json(data)
+//  	})
+//  })
+  router.delete("/delete1/:id",function(request,response){
+ 	var userId=request.params.id;
+ 	
+ 	Customer.deleteCustomer(userId,function(err,data){
+
+if(err){
+			throw err;
+		}
+		response.json(data)
+ 	})
+ })
+  router.get("/get1/:id",function(request,response){
+ 	var userId=request.params.id;
+ 	
+ 	Customer.getCustomersById(userId,function(err,data){
+
+if(err){
+			throw err;
+		}
+		response.json(data)
+ 	})
+ })
+
+   router.put("/customer5/:id",function(request,response){
+ 	var userId=request.params.id;
+ 	var dataFromPostman=request.body;
+
+ 	Customer.getCustomersById(userId,function(err,dataFromDB){
+
+if(err){
+			throw err;
+		}
+		var bodyObj ={
+            name : dataFromPostman.name || dataFromDB.name,
+             email : dataFromPostman.email || dataFromDB.email,
+              mobile : dataFromPostman.mobile || dataFromDB.mobile,
+
+		}
+		Customer.editCustomer(userId,customerObj,function(err,data){
+
+if(err){
+			throw err;
+		}
+
+		response.json(data)
+ 	})
+ });
+ })
+
 app.use("/api",router);
 var PORT = process.env.PORT || 4001;
 app.listen(PORT,function(){
